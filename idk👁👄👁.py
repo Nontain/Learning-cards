@@ -1,7 +1,7 @@
 #importing modules and widgets
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout,QHBoxLayout, QPushButton, QLabel, QLineEdit, QListWidget
- 
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout,QHBoxLayout, QPushButton, QLabel, QLineEdit, QListWidget,QMessageBox
+import json
 #declaring constants
 win_width, win_height = 800, 300
 win_x, win_y = 200, 200
@@ -14,6 +14,7 @@ class MainWindow(QWidget):
         super().__init__(parent=parent, flags=flags)
         # creating and customizing the graphical elements:
         self.initUI()
+        self.questions = dict()
         #connects the elements
         self.connects()
  
@@ -81,11 +82,42 @@ class MainWindow(QWidget):
         answerg1 = self.line_intrebareG1.text()
         answerg2 = self.line_intrebareG2.text() 
         answerg3 = self.line_intrebareG3.text()
-        print('Question',question)
-        print('Answer',answer) 
-        print('Answerg1',answerg1)
-        print('Answerg2',answerg2)
-        print('Answerg3',answerg3)
+
+        msg = QMessageBox()
+        msg.setWindowTitle("Tutorial on PyQt5")
+        msg.setIcon(QMessageBox.Critical) 
+        if question == "" :
+            msg.setText('no Question')
+            msg.exec_()
+        elif answer =="" :
+            msg.setText('no Answer')
+            msg.exec_()
+        elif answerg1 =="" :
+            msg.setText('no Answerg1')
+            msg.exec_()
+        elif answerg2 =="" :
+            msg.setText('no Answerg2')
+            msg.exec_()
+        elif answerg3 =="" :
+            msg.setText('no Asnwerg3')
+            msg.exec_()
+        else:
+            self.questions[question] = {"answer":answer,
+                                        "answer_g1":answerg1,
+                                        "answer_g2":answerg2,
+                                        "answer_g3":answerg3}
+            print(self.questions)
+
+            # print('Question',question)
+            # print('Answer',answer) 
+            # print('Answerg1',answerg1)
+            # print('Answerg2',answerg2)
+            # print('Answerg3',answerg3)
+    def save(self):
+        json_object = json.dar(self.questions, incident=4)
+        with open("sample.json", "w") as outfile:
+            outfile.write(json_object)
+        
  
  
     def connects(self):
