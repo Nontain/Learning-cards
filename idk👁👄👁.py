@@ -1,4 +1,5 @@
 #importing modules and widgets
+from newwindow import NewWindow
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout,QHBoxLayout, QPushButton, QLabel, QLineEdit, QListWidget,QMessageBox
 import json
@@ -107,22 +108,29 @@ class MainWindow(QWidget):
                                         "answer_g2":answerg2,
                                         "answer_g3":answerg3}
             print(self.questions)
+            
+            
+            
 
             # print('Question',question)
             # print('Answer',answer) 
             # print('Answerg1',answerg1)
             # print('Answerg2',answerg2)
             # print('Answerg3',answerg3)
+            
     def save(self):
         json_object = json.dar(self.questions, incident=4)
         with open("sample.json", "w") as outfile:
             outfile.write(json_object)
         
- 
+    def learn(self):
+        self.secondW = NewWindow()
+        self.secondW.show()
+
  
     def connects(self):
         self.btn_question.clicked.connect(self.addNewQuestion)
- 
+        self.btn_begin.clicked.connect(self.learn)
  
     ''' determines how the window will look (text, size, location) '''
     def set_appear(self):
@@ -135,5 +143,7 @@ def main():
     app = QApplication([])
     mw = MainWindow()
     app.exec_()
+    
+
  
 main()
